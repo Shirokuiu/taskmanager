@@ -1,5 +1,14 @@
 import { Place } from './shared/enums';
-import { board, loadMore, mainFilters, mainNav, mainSearch, task, taskEdit } from './components';
+import {
+  board,
+  loadMore,
+  mainFilters,
+  mainNav,
+  mainSearch,
+  task,
+  taskEdit,
+} from './components';
+import { makeTasks } from '../data/task';
 
 const main: HTMLElement = document.querySelector('.main') as HTMLElement;
 
@@ -25,7 +34,7 @@ const initBoard = (): void => {
   Array(3)
     .fill('')
     .forEach(() => {
-      render(boardElem.querySelector('.board__tasks') as HTMLElement, task());
+      render(boardElem.querySelector('.board__tasks') as HTMLElement, task(makeTasks()));
     });
 
   render(boardElem, loadMore());
