@@ -1,14 +1,14 @@
-export interface Task {
+export interface TaskModel {
   description: string;
   dueDate: number;
-  repeatingDays: RepeatingDays;
+  repeatingDays: RepeatingDaysModel;
   tags: string[];
   color: string;
   isFavorite: boolean;
   isArchive: boolean;
 }
 
-interface RepeatingDays {
+export interface RepeatingDaysModel {
   Mo: boolean;
   Tu: boolean;
   We: boolean;

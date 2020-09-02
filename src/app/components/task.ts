@@ -1,18 +1,48 @@
 import { format } from 'date-fns';
-import { Task } from '../shared/models';
+import { RepeatingDaysModel, TaskModel } from '../shared/models';
+import { createElement } from '../shared/utils';
 
-export const task = ({
-  color,
-  isArchive,
-  isFavorite,
-  description,
-  dueDate,
-  tags,
-  repeatingDays,
-}: Task): string =>
-  `<article class="card card--${color} ${
-    Object.values(repeatingDays).some((day: boolean) => day) ? 'card--repeat' : ''
-  }">
+export default class Task {
+  private element: HTMLElement | undefined;
+  private color: string;
+  private repeatingDays: RepeatingDaysModel;
+  private isArchive: boolean;
+  private isFavorite: boolean;
+  private description: string;
+  private dueDate: number;
+  private tags: string[];
+
+  constructor({
+    color,
+    repeatingDays,
+    isArchive,
+    isFavorite,
+    description,
+    dueDate,
+    tags,
+  }: TaskModel) {
+    this.element = undefined;
+    this.color = color;
+    this.repeatingDays = repeatingDays;
+    this.isArchive = isArchive;
+    this.isFavorite = isFavorite;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.tags = tags;
+  }
+
+  getElement(): HTMLElement {
+    if (!this.element) {
+      this.element = createElement(this.getTemplate()) as HTMLElement;
+    }
+
+    return this.element;
+  }
+
+  private getTemplate(): string {
+    return `<article class="card card--${this.color} ${
+      Object.values(this.repeatingDays).some((day: boolean) => day) ? 'card--repeat' : ''
+    }">
             <div class="card__form">
               <div class="card__inner">
                 <div class="card__control">
@@ -20,14 +50,14 @@ export const task = ({
                     edit
                   </button>
                   <button type="button" class="card__btn card__btn--archive ${
-                    !isArchive ? 'card__btn--disabled' : ''
+                    !this.isArchive ? 'card__btn--disabled' : ''
                   }">
                     archive
                   </button>
                   <button
                     type="button"
                     class="card__btn card__btn--favorites ${
-                      !isFavorite ? 'card__btn--disabled' : ''
+                      !this.isFavorite ? 'card__btn--disabled' : ''
                     }"
                   >
                     favorites
@@ -41,7 +71,7 @@ export const task = ({
                 </div>
 
                 <div class="card__textarea-wrap">
-                  <p class="card__text">${description}</p>
+                  <p class="card__text">${this.description}</p>
                 </div>
 
                 <div class="card__settings">
@@ -49,15 +79,21 @@ export const task = ({
                     <div class="card__dates">
                       <div class="card__date-deadline">
                         <p class="card__input-deadline-wrap">
-                          <span class="card__date">${format(dueDate, 'dd MMMM')}</span>
-                          <span class="card__time">${format(dueDate, 'HH:mm a')}</span>
+                          <span class="card__date">${format(
+                            this.dueDate,
+                            'dd MMMM'
+                          )}</span>
+                          <span class="card__time">${format(
+                            this.dueDate,
+                            'HH:mm a'
+                          )}</span>
                         </p>
                       </div>
                     </div>
 
                     <div class="card__hashtag">
                       <div class="card__hashtag-list">
-                        ${tags
+                        ${this.tags
                           .map(
                             (tag: string) => `
                             <span class="card__hashtag-inner">
@@ -74,3 +110,5 @@ export const task = ({
               </div>
             </div>
           </article>`.trim();
+  }
+}

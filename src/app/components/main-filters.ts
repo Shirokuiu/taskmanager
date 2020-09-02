@@ -1,4 +1,22 @@
-export const mainFilters = (): string => `<section class="main__filter filter container">
+import { createElement } from '../shared/utils';
+
+export default class MainFilters {
+  private element: HTMLElement | undefined;
+
+  constructor() {
+    this.element = undefined;
+  }
+
+  getElement(): HTMLElement {
+    if (!this.element) {
+      this.element = createElement(this.getTemplate()) as HTMLElement;
+    }
+
+    return this.element;
+  }
+
+  private getTemplate(): string {
+    return `<section class="main__filter filter container">
         <input
           type="radio"
           id="filter__all"
@@ -65,4 +83,6 @@ export const mainFilters = (): string => `<section class="main__filter filter co
         <label for="filter__archive" class="filter__label"
           >Archive <span class="filter__archive-count">115</span></label
         >
-      </section>`;
+      </section>`.trim();
+  }
+}
