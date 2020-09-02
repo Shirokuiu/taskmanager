@@ -1,7 +1,7 @@
 import { getRandomInteger } from '../app/shared/utils';
-import { Task } from '../app/shared/models';
+import { TaskModel } from '../app/shared/models';
 
-export const makeTasks = (): Task => ({
+export const makeTasks = (): TaskModel => ({
   description: ['Изучить теорию', 'Сделать домашку', 'Пройти интенсив на соточку'][
     getRandomInteger(0, 2)
   ],

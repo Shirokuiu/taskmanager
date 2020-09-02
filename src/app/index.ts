@@ -1,43 +1,40 @@
-import { Place } from './shared/enums';
-import {
-  board,
-  loadMore,
-  mainFilters,
-  mainNav,
-  mainSearch,
-  task,
-  taskEdit,
-} from './components';
+import { render } from './shared/utils';
+import MainNav from './components/main-nav';
+import MainSearch from './components/main-search';
+import MainFilters from './components/main-filters';
+import Board from './components/board';
+import Task from './components/task';
+import LoadMore from './components/load-more';
 import { makeTasks } from '../data/task';
 
 const main: HTMLElement = document.querySelector('.main') as HTMLElement;
 
-const render = (
-  container: HTMLElement,
-  component: string,
-  place: Place = Place.Beforeend
-): void => {
-  container?.insertAdjacentHTML(place, component);
-};
+const mainNav = new MainNav();
+const mainSearch = new MainSearch();
+const mainFilters = new MainFilters();
 
-render(main.querySelector('.main__control') as HTMLElement, mainNav());
-render(main, mainSearch());
-render(main, mainFilters());
+render(main.querySelector('.main__control') as HTMLElement, mainNav.getElement());
+render(main, mainSearch.getElement());
+render(main, mainFilters.getElement());
 
 const initBoard = (): void => {
-  render(main, board());
+  const board = new Board();
+
+  render(main, board.getElement());
 
   const boardElem: HTMLElement = main.querySelector('.board') as HTMLElement;
-
-  render(boardElem.querySelector('.board__tasks') as HTMLElement, taskEdit());
 
   Array(3)
     .fill('')
     .forEach(() => {
-      render(boardElem.querySelector('.board__tasks') as HTMLElement, task(makeTasks()));
+      const task = new Task(makeTasks());
+
+      render(boardElem.querySelector('.board__tasks') as HTMLElement, task.getElement());
     });
 
-  render(boardElem, loadMore());
+  const loadMore = new LoadMore();
+
+  render(boardElem, loadMore.getElement());
 };
 
 initBoard();
