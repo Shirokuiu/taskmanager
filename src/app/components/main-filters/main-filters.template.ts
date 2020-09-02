@@ -1,21 +1,7 @@
-import { createElement } from '../shared/utils';
+import { Component } from '../../core';
 
-export default class MainFilters {
-  private element: HTMLElement | undefined;
-
-  constructor() {
-    this.element = undefined;
-  }
-
-  getElement(): HTMLElement {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate()) as HTMLElement;
-    }
-
-    return this.element;
-  }
-
-  private getTemplate(): string {
+export class MainFiltersTemplate extends Component {
+  getTemplate(): string {
     return `<section class="main__filter filter container">
         <input
           type="radio"
