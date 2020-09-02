@@ -9,7 +9,7 @@ export class BoardController {
   private taskController: TaskController;
   private readonly loadMoreController: LoadMoreController;
 
-  constructor(private readonly container: HTMLElement) {
+  constructor(private readonly $container: HTMLElement) {
     this.boardTemplate = new BoardTemplate().getElement();
     this.dateFiltersController = new DateFiltersController(
       this.boardTemplate.querySelector('.board__filters-wrap')
@@ -18,7 +18,7 @@ export class BoardController {
   }
 
   init(): void {
-    DOM.render(this.container, this.boardTemplate);
+    DOM.render(this.$container, this.boardTemplate);
     this.dateFiltersController.init();
 
     const boardTaskWrap: HTMLElement = this.boardTemplate.querySelector(
