@@ -1,7 +1,7 @@
 import { DOM } from './dom';
 
 export abstract class Component {
-  private element: HTMLElement | undefined;
+  private element: HTMLElement | null = null;
 
   constructor() {
     if (new.target === Component) {
@@ -18,8 +18,8 @@ export abstract class Component {
   }
 
   removeElement() {
-    DOM.unRender(this.element);
-    this.element = undefined;
+    DOM.unRender(this.element as HTMLElement);
+    this.element = null;
   }
 
   getTemplate(): string {
