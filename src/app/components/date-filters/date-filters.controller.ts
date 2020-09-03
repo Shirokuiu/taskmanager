@@ -2,13 +2,15 @@ import { DateFiltersTemplate } from './date-filters.template';
 import { DOM } from '../../core';
 
 export class DateFiltersController {
-  private readonly dateFiltersTemplate: HTMLElement;
+  private readonly dateFiltersTemplate: DateFiltersTemplate;
 
   constructor(private readonly $container: HTMLElement) {
-    this.dateFiltersTemplate = new DateFiltersTemplate().getElement();
+    this.dateFiltersTemplate = new DateFiltersTemplate();
   }
 
   init(): void {
-    DOM.render(this.$container, this.dateFiltersTemplate);
+    const $dateFiltersTemplate: HTMLElement = this.dateFiltersTemplate.getElement();
+
+    DOM.render(this.$container, $dateFiltersTemplate);
   }
 }

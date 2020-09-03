@@ -2,13 +2,15 @@ import { MainSearchTemplate } from './main-search.template';
 import { DOM } from '../../core';
 
 export class MainSearchController {
-  private readonly mainSearchTemplate: HTMLElement;
+  private readonly mainSearchTemplate: MainSearchTemplate;
 
   constructor(private readonly $container: HTMLElement) {
-    this.mainSearchTemplate = new MainSearchTemplate().getElement();
+    this.mainSearchTemplate = new MainSearchTemplate();
   }
 
   init(): void {
-    DOM.render(this.$container, this.mainSearchTemplate);
+    const $mainSearchTemplate: HTMLElement = this.mainSearchTemplate.getElement();
+
+    DOM.render(this.$container, $mainSearchTemplate);
   }
 }

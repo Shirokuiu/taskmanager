@@ -3,16 +3,18 @@ import { TaskTemplate } from './task.template';
 import { DOM } from '../../core';
 
 export class TaskController {
-  private readonly taskTemplate: HTMLElement;
+  private readonly taskTemplate: TaskTemplate;
 
   constructor(
     private readonly $container: HTMLElement,
     private readonly taskData: TaskModel
   ) {
-    this.taskTemplate = new TaskTemplate(this.taskData).getElement();
+    this.taskTemplate = new TaskTemplate(this.taskData);
   }
 
   init(): void {
-    DOM.render(this.$container, this.taskTemplate);
+    const $taskTemplate: HTMLElement = this.taskTemplate.getElement();
+
+    DOM.render(this.$container, $taskTemplate);
   }
 }
