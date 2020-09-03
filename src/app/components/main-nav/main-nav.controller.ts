@@ -2,15 +2,11 @@ import { MainNavTemplate } from './main-nav.template';
 import { DOM } from '../../core';
 
 export class MainNavController {
-  private readonly mainNavTemplate: MainNavTemplate;
+  private readonly mainNavTemplate = new MainNavTemplate();
 
-  constructor(private readonly $container: HTMLElement) {
-    this.mainNavTemplate = new MainNavTemplate();
-  }
+  constructor(private readonly $container: HTMLElement) {}
 
   init(): void {
-    const $mainNavTemplate: HTMLElement = this.mainNavTemplate.getElement();
-
-    DOM.render(this.$container, $mainNavTemplate);
+    DOM.render(this.$container, this.mainNavTemplate.getElement());
   }
 }

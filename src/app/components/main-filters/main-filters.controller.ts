@@ -2,15 +2,11 @@ import { MainFiltersTemplate } from './main-filters.template';
 import { DOM } from '../../core';
 
 export class MainFiltersController {
-  private readonly mainFiltersTemplate: MainFiltersTemplate;
+  private readonly mainFiltersTemplate = new MainFiltersTemplate();
 
-  constructor(private readonly $container: HTMLElement) {
-    this.mainFiltersTemplate = new MainFiltersTemplate();
-  }
+  constructor(private readonly $container: HTMLElement) {}
 
   init(): void {
-    const $mainFiltersTemplate: HTMLElement = this.mainFiltersTemplate.getElement();
-
-    DOM.render(this.$container, $mainFiltersTemplate);
+    DOM.render(this.$container, this.mainFiltersTemplate.getElement());
   }
 }
