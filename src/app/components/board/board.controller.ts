@@ -1,7 +1,9 @@
 import { BoardTemplate } from './board.template';
 import { DOM } from '../../core';
 import { DateFiltersController, LoadMoreController, TaskController } from '..';
-import { makeTasks } from '../../../data/task';
+import { TaskModel } from '../../shared/models';
+import { makeTask } from '../../shared/utils';
+import { Store } from '../../../data/store';
 
 export class BoardController {
   private readonly boardTemplate: BoardTemplate;
@@ -19,6 +21,7 @@ export class BoardController {
 
   init(): void {
     const $boardTemplate: HTMLElement = this.boardTemplate.getElement();
+    const films: TaskModel[] = Store.makeTasks(3);
 
     DOM.render(this.$container, $boardTemplate);
     this.dateFiltersController.init();
@@ -27,12 +30,10 @@ export class BoardController {
       '.board__tasks'
     ) as HTMLElement;
 
-    Array(3)
-      .fill('')
-      .forEach(() => {
-        this.taskController = new TaskController(boardTaskWrap, makeTasks());
-        this.taskController.init();
-      });
+    films.forEach(() => {
+      this.taskController = new TaskController(boardTaskWrap, makeTask());
+      this.taskController.init();
+    });
 
     this.loadMoreController.init();
   }
