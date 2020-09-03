@@ -1,21 +1,7 @@
-import { createElement } from '../shared/utils';
+import { Component } from '../../core';
 
-export default class MainNav {
-  private element: HTMLElement | undefined;
-
-  constructor() {
-    this.element = undefined;
-  }
-
-  getElement(): HTMLElement {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate()) as HTMLElement;
-    }
-
-    return this.element;
-  }
-
-  private getTemplate(): string {
+export class MainNavTemplate extends Component {
+  getTemplate(): string {
     return `<section class="control__btn-wrap">
           <input
             type="radio"
