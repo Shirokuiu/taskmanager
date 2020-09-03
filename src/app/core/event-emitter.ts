@@ -1,8 +1,13 @@
-export class EventEmitter {
-  private events = {};
+interface Events {
+  T?: () => void[];
+}
 
-  emit<T>(eventName: string, data?: T) {
-    const event = this.events[eventName];
+export class EventEmitter<T extends string, R = undefined> {
+  private events: Events = {};
+
+  emit(eventName: T, data?: R) {
+    const event: (() => void)[] = this.events[eventName as string];
+
     if (event) {
       event.forEach((fn: () => void) => {
         fn.call(undefined, data);
@@ -10,15 +15,15 @@ export class EventEmitter {
     }
   }
 
-  subscribe(eventName: string, fn: (res: any) => void): () => void {
-    if (!this.events[eventName]) {
-      this.events[eventName] = [];
+  subscribe(eventName: T, fn: (res: R) => void): () => void {
+    if (!this.events[eventName as string]) {
+      this.events[eventName as string] = [];
     }
 
-    this.events[eventName].push(fn);
+    this.events[eventName as string].push(fn);
 
     return () => {
-      this.events[eventName] = this.events[eventName].filter(
+      this.events[eventName as string] = this.events[eventName as string].filter(
         (eventFn: () => void) => fn !== eventFn
       );
     };
